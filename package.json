@@ -1,0 +1,20 @@
+{
+  "name": "finalprojectdigi",
+  "version": "1.0.0",
+  "description": "Proyecto final para Digitalers Telecom",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Damian-Achata/finalProjectDigi.git"
+  },
+  "author": "Damian Lopez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Damian-Achata/finalProjectDigi/issues"
+  },
+  "homepage": "https://github.com/Damian-Achata/finalProjectDigi#readme"
+}

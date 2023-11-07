@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 //DataBase
+import conexion from './database/conexion.js'
 
 
 

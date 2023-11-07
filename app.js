@@ -4,6 +4,7 @@ import compression from 'compression';
 import morgan from 'morgan';
 import cors from 'cors';
 import hbs from 'hbs';
+import router from './routers/userRouter.js'
 export const app = express();
 
 import { fileURLToPath } from 'url';
@@ -22,6 +23,9 @@ app.use(express.urlencoded({extended: false }));
 app.use(express.static(path.join(__dirname,'public')));
 
 
+//Rutas
+app.use('/user', router)
+
 
 //Configuracion de handlebars
 
@@ -36,8 +40,4 @@ hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 app.get('/', (req,res) => {
     res.render('index');
-});
-
-app.get('/registro', (req,res) => {
-    res.render('registro');
 });

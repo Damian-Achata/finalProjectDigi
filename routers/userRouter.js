@@ -2,11 +2,12 @@
 //responde a la ruta user
 import { Router } from 'express';
 const router = Router(); 
-import {userRegistro,userCreate} from '../controllers/userController.js'
+import {userRegistro,userCreate,userLoginForm,userLogin} from '../controllers/userController.js'
 import {check} from 'express-validator'
 
 
 router.get('/', userRegistro);
+router.get('/login', userLoginForm);
 
 router.post('/',
     [
@@ -15,5 +16,12 @@ router.post('/',
         check('password').isLength({min: 8})
     ],    
 userCreate)
+
+router.post('/login',
+    [
+        check('email').isEmail(),
+        check('password').isLength({min: 8})
+    ],    
+userLogin)
 
 export default router;

@@ -5,6 +5,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import hbs from 'hbs';
 import router from './routers/userRouter.js'
+import producto from './models/productModel.js';
+import productController from './controllers/productController.js';
+import prodRouter from './routers/productRouter.js'
 export const app = express();
 
 import { fileURLToPath } from 'url';
@@ -25,6 +28,7 @@ app.use(express.static(path.join(__dirname,'public')));
 
 //Rutas
 app.use('/user', router)
+app.use('/productos', prodRouter);
 
 
 //Configuracion de handlebars
@@ -41,3 +45,12 @@ hbs.registerPartials(path.join(__dirname, '/views/partials'));
 app.get('/', (req,res) => {
     res.render('index');
 });
+
+app.get('/cargarProductos', (req,res) => {
+    res.render('cargarProductos')
+});
+// Rutas relacionadas con productos utilizando el controlador
+app.post('/agregarProducto', productController.agregarProductos);
+app.get('/listarProductos', productController.listarProductos);
+app.put('/actualizarProducto/:id', productController.actualizarProductos);
+app.delete('/eliminarProducto/:id', productController.eliminarProductos);

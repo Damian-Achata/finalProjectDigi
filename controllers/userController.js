@@ -77,7 +77,7 @@ export const userLogin = async (req, res) => {
         if (match) {
             //Login
             const nombreUser = usuario.nombre;
-            return res.render('indexUser',{nombre: nombreUser});
+            return res.render('indexUser',{nombre: nombreUser,userLoggedIn:true});
         }
         
     } catch (error) {

@@ -6,7 +6,6 @@ import cors from 'cors';
 import hbs from 'hbs';
 import router from './routers/userRouter.js'
 import producto from './models/productModel.js';
-import productController from './controllers/productController.js';
 import prodRouter from './routers/productRouter.js'
 export const app = express();
 
@@ -49,8 +48,9 @@ app.get('/', (req,res) => {
 app.get('/cargarProductos', (req,res) => {
     res.render('cargarProductos')
 });
-// Rutas relacionadas con productos utilizando el controlador
-app.post('/agregarProducto', productController.agregarProductos);
-app.get('/listarProductos', productController.listarProductos);
-app.put('/actualizarProducto/:id', productController.actualizarProductos);
-app.delete('/eliminarProducto/:id', productController.eliminarProductos);
+
+
+app.get('/verProductos', (req,res) => {
+    res.render('verProductos')
+})
+

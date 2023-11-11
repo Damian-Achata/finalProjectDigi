@@ -1,22 +1,21 @@
 
-import producto from '../models/productModel.js';
+import productos from '../models/productModel.js';
 
 // 1. Create (Crear / INSERT)
-export const agregarProductos = (req, res) => {
+const agregarProductos = async (req, res) => {
     console.log(req.body);
-    const { title, price, stock,image, description } = req.body;
+    const { title, price, stock, image, description } = req.body;
     console.log(`Recibimos los Productos y son: ${title} Stock: ${stock}`);
 
-    const nuevoProducto = new producto({
-        title:title,
-        price:price,
-        stock:stock,
-        image:image,
-        description:description
-
+    const nuevoProducto = new Producto({
+        title: title,
+        price: price,
+        stock: stock,
+        image: image,
+        description: description
     });
 
-    nuevoProducto.save()
+    await nuevoProducto.save()
         .then((result) => {
             console.log('Producto insertado correctamente');
             res.redirect('/cargarProductos'); // Redirigir a la página de carga de productos
@@ -31,32 +30,31 @@ export const agregarProductos = (req, res) => {
         });
 };
 
+
 // 2. Read (Leer / FIND)
-export const listarProductos = (req, res) => {
-    producto.find()
-        .then((result) => {
-            let datos = JSON.stringify(result);
-            console.log(`Encontramos los datos: ${datos}`);
-            res.status(200).json({
-                datos: datos
-            });
-        })
-        .catch((err) => {
-            console.error('Error al listar productos:', err);
-            res.status(500).json({
-                ok: false,
-                message: 'Error al listar productos',
-                error: err.message,
-            });
+const listarProductos = async (req, res) => {
+    console.log('Estoy funcionando');
+    try {
+        const verProd = await productos.find();
+        console.log(productos);
+        res.render('verProductos', { productos: verProd });
+    } catch (error) {
+        console.error('Error al listar productos:', error);
+        res.status(500).json({
+            ok: false,
+            message: 'Error al listar productos',
+            error: error.message,
         });
+    }
 };
 
+
 // 3. Update (Actualizar / UPDATE)
-export const actualizarProductos = (req, res) => {
+const actualizarProductos = async (req, res) => {
     const id = req.params.id;
     const { nombre, edad, email, password } = req.body;
 
-    producto.findByIdAndUpdate(id, {
+    await producto.findByIdAndUpdate(id, {
         nombre,
         edad,
         email,
@@ -77,10 +75,10 @@ export const actualizarProductos = (req, res) => {
 };
 
 // 4. Delete (Eliminar / DELETE)
-export const eliminarProductos = (req, res) => {
+const eliminarProductos = async (req, res) => {
     const productoId = req.params.id;
     
-    producto.findByIdAndDelete(productoId)
+    await producto.findByIdAndDelete(productoId)
         .then((result) => {
             console.log(`Hemos eliminado el producto: ${result}`);
             res.send(`<h1>Producto Eliminado ${productoId}</h1>`);
@@ -94,3 +92,10 @@ export const eliminarProductos = (req, res) => {
             });
         });
 };
+
+export default {
+    agregarProductos,
+    listarProductos,
+    actualizarProductos,
+    eliminarProductos
+}

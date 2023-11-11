@@ -1,17 +1,18 @@
 import express from 'express';
 const prodRouter = express.Router();
-import {listarProductos,agregarProductos,actualizarProductos,eliminarProductos} from '../controllers/productController.js';
+import productController from '../controllers/productController.js'
 
 // Ruta para listar todos los productos
-prodRouter.get('/', listarProductos);
+prodRouter.get('/verProductos', productController.listarProductos);
+
 
 // Ruta para agregar un nuevo producto
-prodRouter.post('/', agregarProductos);
+prodRouter.post('/insert', productController.agregarProductos);
 
 // Ruta para actualizar un producto por ID
-prodRouter.put('/:id', actualizarProductos);
+prodRouter.put('/update/:id', productController.actualizarProductos);
 
 // Ruta para eliminar un producto por ID
-prodRouter.delete('/:id', eliminarProductos);
+prodRouter.delete('/delete/:id', productController.eliminarProductos);
 
 export default prodRouter;

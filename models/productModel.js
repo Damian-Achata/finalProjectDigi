@@ -1,19 +1,14 @@
-import { connect, Schema, model } from 'mongoose';
-import { config } from 'dotenv';
-config();
-const mongoUrlLocal = process.env.mongoUrlLocal;
-
-connect(mongoUrlLocal)
-  .then(() => console.log('Base de datos conectada'))
-  .catch(e => console.log('error db:', e));
+import mongoose, {Schema} from "mongoose";
 
 const productoSchema = new Schema({
-  nombre: String,
-  precio: Number,
-  stock: Number,
-  imagen: String,
-  descripcion: String
+  id: { type: Number, required: true },
+  nombre: { type: String, required: true },
+  precio: { type: Number, required: true },
+  stock: { type: Number, required: true },
+  imagen: { type: String },
+  descripcion: { type: String }
 });
 
-const  producto = model('producto', productoSchema);
-export default producto;
+export default mongoose.model('productos', productoSchema);
+
+

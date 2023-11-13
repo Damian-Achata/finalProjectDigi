@@ -5,7 +5,7 @@ dotenv.config();
 const mongoLocal =  process.env.mongoUrlLocal;
 const mongoAtlas = process.env.mongoUrlAtlas
 
-const conexion = mongoose.connect(mongoLocal).then (
+const conexion = mongoose.connect(mongoAtlas).then (
     () => {
         console.log('Conectado a la database');
     },

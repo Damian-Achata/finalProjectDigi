@@ -2,12 +2,12 @@
 import productos from '../models/productModel.js';
 
 // 1. Create (Crear / INSERT)
-const agregarProductos = async (req, res) => {
+export const agregarProductos = async (req, res) => {
     console.log(req.body);
     const { title, price, stock, image, description } = req.body;
     console.log(`Recibimos los Productos y son: ${title} Stock: ${stock}`);
 
-    const nuevoProducto = new Producto({
+    const nuevoProducto = new productos({
         title: title,
         price: price,
         stock: stock,
@@ -32,29 +32,25 @@ const agregarProductos = async (req, res) => {
 
 
 // 2. Read (Leer / FIND)
-const listarProductos = async (req, res) => {
+export const listarProductos = async (req, res) => {
     console.log('Estoy funcionando');
     try {
         const verProd = await productos.find();
-        console.log(productos);
+        console.log(verProd);
         res.render('verProductos', { productos: verProd });
     } catch (error) {
         console.error('Error al listar productos:', error);
-        res.status(500).json({
-            ok: false,
-            message: 'Error al listar productos',
-            error: error.message,
-        });
+        res.redirect('404');
     }
 };
 
 
 // 3. Update (Actualizar / UPDATE)
-const actualizarProductos = async (req, res) => {
+export const actualizarProductos = async (req, res) => {
     const id = req.params.id;
     const { nombre, edad, email, password } = req.body;
 
-    await producto.findByIdAndUpdate(id, {
+    await productos.findByIdAndUpdate(id, {
         nombre,
         edad,
         email,
@@ -75,10 +71,10 @@ const actualizarProductos = async (req, res) => {
 };
 
 // 4. Delete (Eliminar / DELETE)
-const eliminarProductos = async (req, res) => {
+export const eliminarProductos = async (req, res) => {
     const productoId = req.params.id;
     
-    await producto.findByIdAndDelete(productoId)
+    await productos.findByIdAndDelete(productoId)
         .then((result) => {
             console.log(`Hemos eliminado el producto: ${result}`);
             res.send(`<h1>Producto Eliminado ${productoId}</h1>`);
@@ -93,9 +89,3 @@ const eliminarProductos = async (req, res) => {
         });
 };
 
-export default {
-    agregarProductos,
-    listarProductos,
-    actualizarProductos,
-    eliminarProductos
-}

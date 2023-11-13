@@ -1,15 +1,16 @@
 
 //responde a la ruta user
 import { Router } from 'express';
-const router = Router(); 
+const userRouter = Router(); 
 import {userRegistro,userCreate,userLoginForm,userLogin} from '../controllers/userController.js'
-import {check} from 'express-validator'
+import {check} from 'express-validator';
+import { authToken } from '../middlewares/jwt.js';
 
 
-router.get('/', userRegistro);
-router.get('/login', userLoginForm);
+userRouter.get('/', userRegistro);
+userRouter.get('/login', userLoginForm);
 
-router.post('/',
+userRouter.post('/',
     [
         check('nombre').isLength({min: 4}),
         check('email').isEmail(),
@@ -17,13 +18,13 @@ router.post('/',
     ],    
 userCreate)
 
-router.post('/login',
+userRouter.post('/login',
     [
         check('email').isEmail(),
         check('password').isLength({min: 8})
-    ],    
-userLogin)
+    ], 
+    userLogin,authToken)
 
 
 
-export default router;
+export default userRouter;

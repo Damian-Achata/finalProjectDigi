@@ -15,6 +15,11 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        enum: ['usuario', 'admin'], // Utiliza 'enum' para especificar valores permitidos
+        default: 'usuario',
+    },
     timestamp: {
         type: Date,
         default: new Date()

@@ -6,26 +6,28 @@
 
     {{#each productos}}
 
-        <div class="card m-3" style="width: 22rem;">
-            <img src={{image}} class="card-img-top" alt="producto para la venta">
-            <div class="card-body">
-                <h5 class="card-title">{{ title }}</h5>
-                <p class="card-text">{{ description }}</p>
-                <a href="/mostrarproducto/{{_id}}" class="btn btn-primary">
-                    Ver Producto
-                </a>
-                <form action="/eliminar/{{ _id }}" method="post">
-                    <button class="btn btn-danger">
-                        Eliminar Producto
-                    </button>
-                </form>
-                <form action="/actualizar/{{ _id }}" method="post">
-                    <button class="btn btn-warning">
-                        Actualizar Producto
-                    </button>
-                </form>
-            </div>
+    <div class="card m-3" style="width: 22rem;">
+        <img src={{image}} class="card-img-top" alt="producto para la venta">
+        <div class="card-body">
+            <h5 class="card-title">{{ title }}</h5>
+            <p class="card-text">{{ description }}</p>
+            <a href="/mostrarproducto/{{_id}}" class="btn btn-primary">
+                Ver Producto
+            </a>
+            <form action="/eliminar/{{ _id }}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="btn btn-danger">
+                    Eliminar Producto
+                </button>
+            </form>
+
+            <form action="/actualizar/{{ _id }}" method="post">
+                <button class="btn btn-warning">
+                    Actualizar Producto
+                </button>
+            </form>
         </div>
+    </div>
 
     {{/each}}
 

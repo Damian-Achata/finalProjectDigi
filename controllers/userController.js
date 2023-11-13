@@ -2,6 +2,7 @@
 import bcrypt from 'bcrypt'
 import { validationResult } from "express-validator";
 import users from '../models/userModel.js';
+import { generarToken,authToken } from '../middlewares/jwt.js';
 
 
 export const userRegistro = (req, res) => {
@@ -44,8 +45,6 @@ export const userCreate = async (req, res) => {
         //4.Enviar a la database
         await usuario.save();
 
-        //5.Token
-
 
         return res.render('login')
     } catch (error) {
@@ -75,9 +74,12 @@ export const userLogin = async (req, res) => {
         const match =  bcrypt.compareSync(password,usuario.password);
 
         if (match) {
+            //Generar Token
+            const token = generarToken(usuario.nombre,usuario.role);
+            res.cookie('token', token, { httpOnly: true });
             //Login
             const nombreUser = usuario.nombre;
-            return res.render('indexUser',{nombre: nombreUser,userLoggedIn:true});
+            return res.render('indexUser',{nombre: nombreUser,userLoggedIn:true, token});
         }
         
     } catch (error) {

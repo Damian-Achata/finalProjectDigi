@@ -79,7 +79,7 @@ export const userLogin = async (req, res) => {
             res.cookie('token', token, { httpOnly: true });
             //Login
             const nombreUser = usuario.nombre;
-            return res.render('indexUser',{nombre: nombreUser,userLoggedIn:true, token});
+            return res.render('indexUser',{nombre: nombreUser,userLoggedIn:true,isAdmin:usuario.role, token});
         }
         
     } catch (error) {

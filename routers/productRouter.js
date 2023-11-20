@@ -3,7 +3,13 @@ const prodRouter = Router();
 import {listarProductos,agregarProductos,actualizarProductos,eliminarProductos} from '../controllers/productController.js'
 
 // Ruta para listar todos los productos
-prodRouter.get('/verProductos', listarProductos);
+prodRouter.get('/', listarProductos);
+// En tu archivo de rutas
+prodRouter.get('/insert', (req, res) => {
+    // Lógica para renderizar la vista cargarProductos.hbs
+    res.render('cargarProductos');
+  });
+  
 
 
 // Ruta para agregar un nuevo producto

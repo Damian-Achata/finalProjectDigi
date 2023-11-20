@@ -43,19 +43,19 @@ hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
 //Rutas
 app.use('/user', userRouter)
-app.use('/productos', prodRouter);
+app.use('/products', prodRouter);
 
 app.get('/', (req,res) => {
     res.render('index');
 });
 
-app.get('/verProductos', (req,res) => {
-    res.render('verProductos');
-});
+// app.get('/verProductos', (req,res) => {
+//     res.render('verProductos');
+// });
 
-app.get('/cargarProductos',authToken,isAdmin, (req,res) => {
-    res.render('cargarProductos')
-});
+// app.get('/cargarProductos',authToken,isAdmin, (req,res) => {
+//     res.render('cargarProductos')
+// });
 
 
 

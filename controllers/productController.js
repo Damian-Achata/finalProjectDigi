@@ -1,6 +1,7 @@
 
 import productos from '../models/productModel.js';
 
+
 // 1. Create (Crear / INSERT)
 export const agregarProductos = async (req, res) => {
     console.log(req.body);
@@ -18,7 +19,7 @@ export const agregarProductos = async (req, res) => {
     await nuevoProducto.save()
         .then((result) => {
             console.log('Producto insertado correctamente');
-            res.redirect('/cargarProductos'); // Redirigir a la página de carga de productos
+            res.redirect('/products/insert'); // Redirigir a la página de carga de productos
         })
         .catch((err) => {
             console.error('Error al insertar producto:', err);

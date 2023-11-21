@@ -1,5 +1,6 @@
 
 import productos from '../models/productModel.js';
+import { isAdmin } from '../middlewares/admin.js';
 
 
 // 1. Create (Crear / INSERT)
@@ -36,40 +37,47 @@ export const agregarProductos = async (req, res) => {
 export const listarProductos = async (req, res) => {
     console.log('Estoy funcionando');
     try {
+        // Verifica si el usuario es administrador
+        const admin = req.users && req.users.role === 'admin';
         const verProd = await productos.find();
         console.log(verProd);
-        res.render('verProductos', { productos: verProd });
+        res.render('verProductos', { productos: verProd,isAdmin:admin });
     } catch (error) {
         console.error('Error al listar productos:', error);
         res.redirect('404');
     }
 };
 
-
-// 3. Update (Actualizar / UPDATE)
+// Update (Actualizar / UPDATE)
 export const actualizarProductos = async (req, res) => {
     const id = req.params.id;
-    const { nombre, edad, email, password } = req.body;
+    const { title, price, stock, image, description } = req.body;
 
-    await productos.findByIdAndUpdate(id, {
-        nombre,
-        edad,
-        email,
-        password
-    }, { new: true })
-        .then((result) => {
-            console.log(`Producto actualizado: ${result}`);
-            res.send(`<h1>Producto Actualizado ${id}</h1>`);
-        })
-        .catch((err) => {
-            console.error('Error al actualizar producto:', err);
-            res.status(500).json({
-                ok: false,
-                message: 'Error al actualizar producto',
-                error: err.message,
-            });
+    try {
+        const productoActualizado = await productos.findByIdAndUpdate(id, {
+            title,
+            price,
+            stock,
+            image,
+            description
+        }, { new: true });
+
+        if (!productoActualizado) {
+            return res.status(404).json({ message: 'Producto no encontrado' });
+        }
+
+        res.redirect('/products/'); // Redireccionar a la lista de productos
+    } catch (error) {
+        console.error('Error al actualizar producto:', error);
+        res.status(500).json({
+            ok: false,
+            message: 'Error al actualizar producto',
+            error: error.message,
         });
+    }
 };
+
+
 
 // 4. Delete (Eliminar / DELETE)
 export const eliminarProductos = async (req, res) => {
@@ -78,7 +86,7 @@ export const eliminarProductos = async (req, res) => {
     await productos.findByIdAndDelete(productoId)
         .then((result) => {
             console.log(`Hemos eliminado el producto: ${result}`);
-            res.send(`<h1>Producto Eliminado ${productoId}</h1>`);
+            res.redirect('/products/');
         })
         .catch((err) => {
             console.error('Error al eliminar producto:', err);

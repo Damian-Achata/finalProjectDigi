@@ -17,6 +17,20 @@
                             <p class="card-text">Stock: {{ this.stock }}</p>
                         </div>
                     </div>
+                    <form action="/products/update/{{_id}}/edit" method="patch">
+                        <button class="btn btn-warning">
+                            Actualizar Producto
+                        </button>
+                    </form>
+
+
+                    <form action="/delete/{{ _id }}" method="delete">
+                        <button class="btn btn-danger" type="submit"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')">
+                            Eliminar Producto
+                        </button>
+                    </form>
+
                 </div>
             </div>
         </div>
